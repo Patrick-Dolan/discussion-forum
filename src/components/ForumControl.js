@@ -10,7 +10,24 @@ class ForumControl extends React.Component {
     this.state = {
       selectedPost: null,
       formVisibleOnPage: false,
-      mainPostList: []
+      mainPostList: [
+        {
+          title: "A title",
+          author: "Patrick",
+          postBody: "THIS IS THE BODY",
+          date: "Today sometime",
+          id: "1",
+          key: "1"
+        },
+        {
+          title: "Another title",
+          author: "Nick",
+          postBody: "THIS IS THE BODY FOR THE SECOND ONE",
+          date: "Today sometime againj",
+          id: "2",
+          key: "2"
+        }
+      ]
     };
   }
 
@@ -39,6 +56,11 @@ class ForumControl extends React.Component {
       </>
     )
   }
+}
+
+ForumControl.propTypes = {
+  mainPostList: PropTypes.array,
+  // formVisibleOnPage: PropTypes.bool
 }
 
 export default ForumControl;
