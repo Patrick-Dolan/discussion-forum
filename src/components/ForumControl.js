@@ -1,7 +1,7 @@
 import React from 'react';
 import NewPostForm from './NewPostForm';
 import PostList from './PostList';
-// import { connect } from 'react-redux';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 class ForumControl extends React.Component {
@@ -10,24 +10,6 @@ class ForumControl extends React.Component {
     this.state = {
       selectedPost: null,
       formVisibleOnPage: false,
-      mainPostList: [
-        {
-          title: "A title",
-          author: "Patrick",
-          postBody: "THIS IS THE BODY",
-          date: "Today sometime",
-          id: "1",
-          key: "1"
-        },
-        {
-          title: "Another title",
-          author: "Nick",
-          postBody: "THIS IS THE BODY FOR THE SECOND ONE",
-          date: "Today sometime againj",
-          id: "2",
-          key: "2"
-        }
-      ]
     };
   }
 
@@ -38,23 +20,33 @@ class ForumControl extends React.Component {
   }
 
   handleAddingNewPostToList = (newPost) => {
-    const newMainPostList = this.state.mainPostList.concat(newPost);
-    this.setState({mainPostList: newMainPostList,
-                  formVisibleOnPage: false});
+    const { dispatch } = this.props;
+    const action = {
+      type: "ADD_POST",
+      author: newPost.author,
+      title: newPost.title,
+      date: newPost.date,
+      postBody: newPost.postBody,
+      id: newPost.id
+    };
+    dispatch(action);
+    this.setState({formVisibleOnPage: false});
+    //const newMainPostList = this.state.mainPostList.concat(newPost);
+    //this.setState({mainPostList: newMainPostList,
+                  // formVisibleOnPage: false});
   }
   
   render() {
     let currentlyVisibleState = null;
-    let buttonText
+    let buttonText = null;
 
     if (this.state.formVisibleOnPage) {
       currentlyVisibleState = <NewPostForm onNewPostCreation={this.handleAddingNewPostToList}/>;
       buttonText = "Back";
     } else {
-      currentlyVisibleState = <PostList postList={this.state.mainPostList} />
+      currentlyVisibleState = <PostList postList={this.props.mainPostList} />
       buttonText = "Create Post"
     }
-
     return (
       <>
       {currentlyVisibleState}
@@ -65,8 +57,16 @@ class ForumControl extends React.Component {
 }
 
 ForumControl.propTypes = {
-  mainPostList: PropTypes.array,
+  mainPostList: PropTypes.object
   // formVisibleOnPage: PropTypes.bool
 }
+
+const mapStateToProps = state => {
+  return {
+    mainPostList: state
+  }
+}
+
+ForumControl = connect(mapStateToProps)(ForumControl);
 
 export default ForumControl;

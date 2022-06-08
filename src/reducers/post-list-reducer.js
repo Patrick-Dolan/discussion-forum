@@ -1,4 +1,4 @@
-export default (state = {}, action) => {
+function Reducer(state = {}, action) {
   const {title, author, date, postBody, id} = action;
   switch (action.type) {
     case 'ADD_POST':
@@ -19,3 +19,5 @@ export default (state = {}, action) => {
       return state;
   }
 };
+
+export default Reducer;

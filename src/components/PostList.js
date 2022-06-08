@@ -3,24 +3,22 @@ import Post from "./Post";
 import PropTypes from "prop-types";
 
 function PostList(props) {
-  const { postList } = props;
   return (
     <>
-      {postList.map((element, index) => 
+      {Object.values(props.postList).map((element) => 
         <Post
         title = {element.title}
         author = {element.author}
         postBody = {element.postBody}
         date = {element.date}
-        id = {element.id}
-        key = {index}/>
+        id = {element.id}/>
       )}
     </>
     );
 }
 
 PostList.propTypes = {
-  postList: PropTypes.array,
+  postList: PropTypes.object,
   // onPostSelection: PropTypes.func
 }
 

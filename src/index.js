@@ -8,6 +8,8 @@ import PostListReducer from "./reducers/post-list-reducer";
 
 const store = createStore(PostListReducer);
 
+store.subscribe(() => console.log(store.getState()));
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store = {store}>
