@@ -11,7 +11,8 @@ function PostList(props) {
         author = {element.author}
         postBody = {element.postBody}
         date = {element.date}
-        id = {element.id}/>
+        id = {element.id}
+        key = {element.id}/>
       )}
     </>
     );
