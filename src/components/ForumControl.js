@@ -36,13 +36,19 @@ class ForumControl extends React.Component {
       formVisibleOnPage: !prevState.formVisibleOnPage 
     }));
   }
+
+  handleAddingNewPostToList = (newPost) => {
+    const newMainPostList = this.state.mainPostList.concat(newPost);
+    this.setState({mainPostList: newMainPostList,
+                  formVisibleOnPage: false});
+  }
   
   render() {
     let currentlyVisibleState = null;
     let buttonText
 
     if (this.state.formVisibleOnPage) {
-      currentlyVisibleState = <NewPostForm/>;
+      currentlyVisibleState = <NewPostForm onNewPostCreation={this.handleAddingNewPostToList}/>;
       buttonText = "Back";
     } else {
       currentlyVisibleState = <PostList postList={this.state.mainPostList} />
