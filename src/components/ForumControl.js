@@ -45,13 +45,23 @@ class ForumControl extends React.Component {
     dispatch(action);
     this.setState({formVisibleOnPage: false});
   }
+
+  handleDeletingPost = id => {
+    const { dispatch } = this.props;
+    const action = {
+      type: "DELETE_POST",
+      id
+    };
+    dispatch(action);
+    this.setState({selectedPost: null});
+  }
   
   render() {
     let currentlyVisibleState = null;
     let buttonText = null;
 
     if (this.state.selectedPost != null) {
-      currentlyVisibleState = <PostDetail post={this.state.selectedPost} />
+      currentlyVisibleState = <PostDetail post={this.state.selectedPost} onClickingDelete={this.handleDeletingPost} />
       buttonText="Return to Post List"
     } else if (this.state.formVisibleOnPage) {
       currentlyVisibleState = <NewPostForm onNewPostCreation={this.handleAddingNewPostToList}/>;

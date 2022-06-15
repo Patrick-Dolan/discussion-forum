@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 function PostDetail(props) {
-  const { post } = props;
+  const { post, onClickingDelete } = props;
   
   return (
     <>
@@ -10,12 +10,14 @@ function PostDetail(props) {
       <p>Author: <em>{post.author}</em></p>
       <p>{post.postBody}</p>
       <p>{post.date}</p>
+      <button onClick={() => onClickingDelete(post.id)}>Delete Post</button>
     </>
   )
 }
 
 PostDetail.propTypes = {
-  post: PropTypes.object
+  post: PropTypes.object,
+  onClickingDelete: PropTypes.func
 }
 
 export default PostDetail;
