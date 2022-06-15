@@ -3,20 +3,33 @@ import NewPostForm from './NewPostForm';
 import PostList from './PostList';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import PostDetail from './PostDetail';
 
 class ForumControl extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       selectedPost: null,
-      formVisibleOnPage: false,
+      formVisibleOnPage: false
     };
   }
 
   handleClick = () => {
-    this.setState(prevState => ({
-      formVisibleOnPage: !prevState.formVisibleOnPage 
-    }));
+    if (this.state.selectedPost != null) {
+      this.setState({
+        formVisibleOnPage: false,
+        selectedPost: null
+      });
+    } else {
+      this.setState(prevState => ({
+        formVisibleOnPage: !prevState.formVisibleOnPage 
+      }));
+    }
+  }
+
+  handleChangingSelectedPost = id => {
+    const selectedPost = this.props.mainPostList[id];
+    this.setState({selectedPost: selectedPost});
   }
 
   handleAddingNewPostToList = (newPost) => {
@@ -31,20 +44,20 @@ class ForumControl extends React.Component {
     };
     dispatch(action);
     this.setState({formVisibleOnPage: false});
-    //const newMainPostList = this.state.mainPostList.concat(newPost);
-    //this.setState({mainPostList: newMainPostList,
-                  // formVisibleOnPage: false});
   }
   
   render() {
     let currentlyVisibleState = null;
     let buttonText = null;
 
-    if (this.state.formVisibleOnPage) {
+    if (this.state.selectedPost != null) {
+      currentlyVisibleState = <PostDetail post={this.state.selectedPost} />
+      buttonText="Return to Post List"
+    } else if (this.state.formVisibleOnPage) {
       currentlyVisibleState = <NewPostForm onNewPostCreation={this.handleAddingNewPostToList}/>;
-      buttonText = "Back";
+      buttonText="Return to Post List";
     } else {
-      currentlyVisibleState = <PostList postList={this.props.mainPostList} />
+      currentlyVisibleState = <PostList postList={this.props.mainPostList} onPostSelection={this.handleChangingSelectedPost} />
       buttonText = "Create Post"
     }
     return (
@@ -58,7 +71,6 @@ class ForumControl extends React.Component {
 
 ForumControl.propTypes = {
   mainPostList: PropTypes.object
-  // formVisibleOnPage: PropTypes.bool
 }
 
 const mapStateToProps = state => {
