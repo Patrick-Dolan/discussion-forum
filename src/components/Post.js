@@ -4,12 +4,11 @@ import PropTypes from "prop-types";
 function Post(props) {
   return (
     <>
-      <div>
-        <h3>{props.title}</h3>
-        <p>{props.author}</p>
-        <p>{props.postBody}</p>
-        <p>{props.date}</p>
-      </div>
+      <h3>{props.title}</h3>
+      <p>{props.author}</p>
+      <p>{props.postBody}</p>
+      <p>{props.date}</p>
+      <hr />
     </>
   );
 }
