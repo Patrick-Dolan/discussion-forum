@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { v4 } from 'uuid';
+import ReusableForm from "./ReusableForm";
 
 function NewPostForm(props) {
 
@@ -16,24 +17,9 @@ function NewPostForm(props) {
 
   return (
   <>
-    <form onSubmit={handleNewPostFormSubmission}>
-        <input
-          type='text'
-          name='title'
-          placeholder='Title' />
-        <input
-          type='text'
-          name='author'
-          placeholder='Author' />
-        <input
-          type='text'
-          name='date'
-          placeholder='Date' />
-        <textarea
-          name='postBody'
-          placeholder='Post body...' />
-        <button type='submit'>Create Post</button>
-      </form>
+    <ReusableForm
+      formSubmissionHandler={handleNewPostFormSubmission}
+      buttonText="Post" />
     </>
   );
 }
